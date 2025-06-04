@@ -32,4 +32,10 @@ class PostController extends Controller
 
         return redirect('/posts/create')->with('message', '投稿完了だにゃん！');
     }
+
+    public function index()
+    {
+        $posts = Post::latest()->get();
+        return view('posts.index', compact('posts'));
+    }
 }
