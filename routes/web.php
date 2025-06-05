@@ -10,3 +10,4 @@ Route::get('/', function () {
 Route::get('posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/create', [PostController::class, 'create']);
 Route::post('/posts', [PostController::class, 'store'])->name('post.store');
+Route::delete('/posts/{post}', [PostController::class, 'delete'])->name('posts.delete');

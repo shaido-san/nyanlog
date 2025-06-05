@@ -16,6 +16,11 @@
             <p>経度: {{ $post->longitude }}</p>
             <hr>
         </div>
+        <form action="{{ route('posts.delete', $post) }}" method="POST" onsubmit="return confirm('本当に削除しますか？')">
+        @csrf
+        @method('DELETE')
+        <button type="submit">投稿を削除する</button>
+    </form>
     @endforeach
     
 </body>

@@ -38,4 +38,10 @@ class PostController extends Controller
         $posts = Post::latest()->get();
         return view('posts.index', compact('posts'));
     }
+
+    public function delete(Post $post)
+    {
+        $post->delete();
+        return redirect()->route('posts.index')->with('success', '投稿を削除しました');
+    }
 }
