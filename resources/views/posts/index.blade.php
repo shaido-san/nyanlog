@@ -11,12 +11,13 @@
     @foreach ($posts as $post )
         <div style="margin-bottom: 30px;">
             <img src="{{ asset('storage/' . $post->image_path) }}" alt="画像" width="300">
-            <p>{{ $post->memo }}</p>
+            <p>メモ: {{ $post->memo }}</p>
             <p>緯度: {{ $post->latitude }}</p>
             <p>経度: {{ $post->longitude }}</p>
+            <a href="{{ route('posts.show', ['id' => $post->id]) }}">投稿の詳細を見る</a>
             <hr>
         </div>
-        <form action="{{ route('posts.delete', $post) }}" method="POST" onsubmit="return confirm('本当に削除しますか？')">
+        <form action="{{ route('posts.delete', ['id' => $post->id]) }}" method="POST" onsubmit="return confirm('本当に削除しますか？')">
         @csrf
         @method('DELETE')
         <button type="submit">投稿を削除する</button>

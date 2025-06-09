@@ -39,9 +39,16 @@ class PostController extends Controller
         return view('posts.index', compact('posts'));
     }
 
-    public function delete(Post $post)
+    public function delete($id)
     {
+        $post = Post::findOrFail($id);
         $post->delete();
         return redirect()->route('posts.index')->with('success', '投稿を削除しました');
+    }
+
+    public function show($id)
+    {
+        $post = Post::findOrFail($id);
+        return view('posts.show', compact('post'));
     }
 }
