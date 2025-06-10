@@ -7,4 +7,6 @@
     <p>メモ: <input type="text" name="memo" value="{{ old('memo', $post->memo) }}"></p>
     <p>緯度: <input type="text" name="latitude" value="{{ old('latitude', $post->latitude) }}"></p>
     <p>経度: <input type="text" name="longitude" value="{{ old('memo', $post->memo) }}"></p>
+
+    <button type="submit">更新する</button>
 </form>

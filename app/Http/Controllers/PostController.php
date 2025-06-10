@@ -58,5 +58,17 @@ class PostController extends Controller
         return view('posts.edit', compact('post'));
     }
 
-    public functio
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'memo' => 'nullable|string|max:255',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+        ]);
+
+        $post = Post::findOrFail($id);
+        $post->update($validated);
+
+        return redirect()->route('posts.show', ['id' => $post->id])->with('success', '投稿内容が変更されました');
+    }
 }
