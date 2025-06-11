@@ -5,4 +5,5 @@
 <p>緯度:{{ $post->latitude }}</p>
 <p>経度:{{ $post->longitude }}</p>
 
+<a href="{{ route('posts.edit', ['id' => $post->id]) }}">内容を編集する</a>
 <a href="{{ route('posts.index') }}">投稿一覧ページに戻る</a>
