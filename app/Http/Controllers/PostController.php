@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
@@ -32,6 +33,7 @@ class PostController extends Controller
             'memo' => $validated['memo'] ?? null,
             'latitude' => $validated['latitude'] ?? null,
             'longitude' => $validated['longitude'] ?? null,
+            'user_id' => auth()->id(),
         ]);
 
         return redirect('/posts/create')->with('message', '投稿完了だにゃん！');
@@ -46,6 +48,11 @@ class PostController extends Controller
     public function delete($id)
     {
         $post = Post::findOrFail($id);
+
+        if ($post->user_id != auth()->id()) {
+            abort(403, '投稿や編集をする場合はログインしてください。');
+        }
+
         $post->delete();
         return redirect()->route('posts.index')->with('success', '投稿を削除しました');
     }
@@ -59,18 +66,29 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
+
+        if ($post->user_id != auth()->id()) {
+            abort(403, '投稿や編集をする場合はログインしてください。');
+        }
+
         return view('posts.edit', compact('post'));
     }
 
     public function update(Request $request, $id)
     {
+        $post = Post::findOrFail($id);
+
+        if ($post->user_id != auth()->id()) {
+            abort(403, '投稿や編集をする場合はログインしてください。');
+        }
+        
         $validated = $request->validate([
             'memo' => 'nullable|string|max:255',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
         ]);
 
-        $post = Post::findOrFail($id);
+        
         $post->update($validated);
 
         return redirect()->route('posts.show', ['id' => $post->id])->with('success', '投稿内容が変更されました');
