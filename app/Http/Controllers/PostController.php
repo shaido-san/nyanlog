@@ -36,7 +36,7 @@ class PostController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        return redirect('/posts/create')->with('message', '投稿完了だにゃん！');
+        return redirect()->route('posts.index')->with('message', '投稿完了だにゃん！');
     }
 
     public function index()

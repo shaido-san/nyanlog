@@ -11,5 +11,6 @@ class Post extends Model
         'memo',
         'latitude',
         'longitude',
+        'user_id',
     ];
 }

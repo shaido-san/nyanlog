@@ -5,7 +5,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('mypage');
+    return Auth::check() ? redirect()->route('mypage') : view('welcome');
 });
 
 Route::get('/mypage', function () {

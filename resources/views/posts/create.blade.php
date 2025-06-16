@@ -28,5 +28,6 @@
         </div>
         <button type="submit">投稿する</button>
     </form>
+    <a href="{{ route('posts.index') }}">投稿一覧ページに戻る</a>
 </body>
 </html>
