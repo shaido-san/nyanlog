@@ -24,16 +24,18 @@ class PostController extends Controller
             'memo' => 'nullable|string',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
+            'spotted' => 'nullable|date',
         ]);
 
         $path = $request->file('image')->store('images', 'public');
 
         Post::create([
+            'user_id' => auth()->id(),
             'image_path' => $path,
             'memo' => $validated['memo'] ?? null,
             'latitude' => $validated['latitude'] ?? null,
             'longitude' => $validated['longitude'] ?? null,
-            'user_id' => auth()->id(),
+            'spotted_at' => $validated['spotted'] ?? now(),
         ]);
 
         return redirect()->route('posts.index')->with('message', '投稿完了だにゃん！');

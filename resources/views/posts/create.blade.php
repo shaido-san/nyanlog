@@ -26,6 +26,8 @@
             <label for="longitude">経度:</label>
             <input type="text" name="longitude" id="longitude" readonly style="background-color: #f0f0f0;">
         </div>
+        <label for="spotted_at">猫ちゃんと遭遇した日時:</label>
+        <input type="datetime-local" name="spotted_at" id="spotted_at">
         <div style="margin-top: 20px;">
             <h3>地図で猫ちゃんの位置を決めてね！緯度と経度は位置を決めれば自動で決まるよ！</h3>
             <div id="map" style="height: 400px;"></div>
