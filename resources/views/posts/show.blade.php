@@ -4,7 +4,22 @@
 <p>メモ:{{ $post->memo }}</p>
 <p>緯度:{{ $post->latitude }}</p>
 <p>経度:{{ $post->longitude }}</p>
-<div id="map" style="height: 400px; margin-top: 20px"></div>
+<p>投稿日時:{{ $post->spotted_at }}</p>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<div id="map" style="height: 500px; margin-bottom:30px;"></div>
+<script>
+    var map = L.map('map').setView([{{ $post->latitude }}, {{ $post->longitude }}], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
+
+    L.marker([{{ $post->latitude }}, {{ $post->longitude }}]).addTo(map)
+    .bindPopup("ここで猫ちゃんと遭遇したにゃ")
+    .openPopup()
+</script>
 
 <a href="{{ route('posts.edit', ['id' => $post->id]) }}">内容を編集する</a>
 <a href="{{ route('posts.index') }}">投稿一覧ページに戻る</a>
+

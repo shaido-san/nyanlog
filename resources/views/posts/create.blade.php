@@ -20,7 +20,7 @@
         </div>
         <div>
             <label for="latitude">緯度:</label>
-            <input type="text" name="latitude" id="latitude" readonly style="background-color: #f0f0f0;>
+            <input type="text" name="latitude" id="latitude" readonly style="background-color: #f0f0f0;">
         </div>
         <div>
             <label for="longitude">経度:</label>
@@ -57,7 +57,7 @@
         marker = L.marker([lat, lng]).addTo(map);
 
         document.getElementById('latitude').value = lat;
-        document.getElementById('longitude').value = lng
+        document.getElementById('longitude').value = lng;
     });
 </script>
 </html>
