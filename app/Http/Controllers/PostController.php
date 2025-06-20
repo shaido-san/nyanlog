@@ -95,4 +95,14 @@ class PostController extends Controller
 
         return redirect()->route('posts.show', ['id' => $post->id])->with('success', '投稿内容が変更されました');
     }
+
+    public function map(Request $request)
+    {
+       $query = Post::with('user');
+       if ($request->get('filter') === 'mine') {
+        $query->where('user_id', auth()->id());
+       }
+       $posts = $query->get();
+        return view('posts.map', compact('posts'));
+    }
 }

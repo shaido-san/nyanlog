@@ -14,7 +14,7 @@
                     <ul class="list-disc pl-6 space-y-2">
                         <li><a href="{{ route('posts.index') }}" class="text-blue-600 hover:underline">自分の投稿一覧を見る</a></li>
                         <li><a href="{{ route('posts.create') }}" class="text-blue-600 hover:underline">新しい投稿を作成する</a></li>
-                        {{-- 将来的に共有機能が入ったらここにリンクを追加 --}}
+                        <li><a href="{{ route('posts.map') }}" class="text-blue-600 hover:underline">すべてのユーザーの投稿を表示</a></li>
                     </ul>
                 </div>
             </div>
