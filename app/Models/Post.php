@@ -12,6 +12,7 @@ class Post extends Model
         'latitude',
         'longitude',
         'user_id',
+        'category',
     ];
 
     public function user()

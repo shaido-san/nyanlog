@@ -23,7 +23,8 @@
                 <strong>{{ e($post->user?->name ?? '名無し') }}</strong><br>
                 <img src="{{ asset('storage/' . $post->image_path) }}" width="100"><br>
                 {{ e($post->memo ?? '') }}<br>
-                {{ $post->spotted_at ?? '' }}
+                {{ $post->spotted_at ?? '' }}<br>
+                <a href="{{ route('posts.show', ['id' => $post->id]) }}">この猫ちゃんの詳細を見る</a>
                 `);
            @endif
         @endforeach
