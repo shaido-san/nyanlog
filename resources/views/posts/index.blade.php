@@ -12,9 +12,10 @@
         <div style="margin-bottom: 30px;">
             <img src="{{ asset('storage/' . $post->image_path) }}" alt="画像" width="300">
             <p>メモ: {{ $post->memo }}</p>
+            <p>猫ちゃんの種類: {{ $post->category }}</p>
             <p>緯度: {{ $post->latitude }}</p>
             <p>経度: {{ $post->longitude }}</p>
-            <p>投稿日時{{ $post->spotted_at }}</p>
+            <p>猫ちゃんに会った日時: {{ $post->spotted_at }}</p>
             <a href="{{ route('posts.show', ['id' => $post->id]) }}">投稿の詳細を見る</a>
             <hr>
         </div>

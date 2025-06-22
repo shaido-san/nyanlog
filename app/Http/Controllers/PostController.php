@@ -22,9 +22,10 @@ class PostController extends Controller
         $validated = $request->validate([
             'image' => 'required|image',
             'memo' => 'nullable|string',
+            'category' => 'required|string',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
-            'spotted' => 'nullable|date',
+            'spotted_at' => 'nullable|date',
         ]);
 
         $path = $request->file('image')->store('images', 'public');
@@ -33,9 +34,10 @@ class PostController extends Controller
             'user_id' => auth()->id(),
             'image_path' => $path,
             'memo' => $validated['memo'] ?? null,
+            'category' => $validated['category'],
             'latitude' => $validated['latitude'] ?? null,
             'longitude' => $validated['longitude'] ?? null,
-            'spotted_at' => $validated['spotted'] ?? now(),
+            'spotted_at' => $validated['spotted_at'] ?? now(),
         ]);
 
         return redirect()->route('posts.index')->with('message', '投稿完了だにゃん！');
@@ -86,12 +88,20 @@ class PostController extends Controller
         
         $validated = $request->validate([
             'memo' => 'nullable|string|max:255',
+            'category' => 'required|string',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
+            'spotted_at' => 'nullable|date',
         ]);
 
         
-        $post->update($validated);
+        $post->update([
+            'memo' => $validated['memo'] ?? $post->memo,
+            'category' => $validated['category'],
+            'latitude' => $validated['latitude'] ?? $post->latitude,
+            'longitude' => $validated['longitude'] ?? $post->longitude,
+            'spotted_at' => $validated['spotted_at'] ?? $post->spotted_at,
+        ]);
 
         return redirect()->route('posts.show', ['id' => $post->id])->with('success', '投稿内容が変更されました');
     }

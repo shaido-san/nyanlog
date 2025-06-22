@@ -4,6 +4,7 @@
 </div>
 <a href="{{ route('posts.map') }}">すべてのユーザーの投稿を表示</a>
 <a href="{{ route('posts.map', ['filter' => 'mine']) }}">自分の投稿のみ表示</a>
+<a href="{{ route('mypage') }}">マイページに戻る</a>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -23,6 +24,7 @@
                 <strong>{{ e($post->user?->name ?? '名無し') }}</strong><br>
                 <img src="{{ asset('storage/' . $post->image_path) }}" width="100"><br>
                 {{ e($post->memo ?? '') }}<br>
+                {{ $post->category }}
                 {{ $post->spotted_at ?? '' }}<br>
                 <a href="{{ route('posts.show', ['id' => $post->id]) }}">この猫ちゃんの詳細を見る</a>
                 `);

@@ -13,6 +13,7 @@ class Post extends Model
         'longitude',
         'user_id',
         'category',
+        'spotted_at',
     ];
 
     public function user()

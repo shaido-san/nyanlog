@@ -2,6 +2,7 @@
 
 <img src="{{ asset('storage/' . $post->image_path) }}" alt="画像" width="300">
 <p>メモ:{{ $post->memo }}</p>
+<p>猫ちゃんの種類:{{ $post->category }}</p>
 <p>緯度:{{ $post->latitude }}</p>
 <p>経度:{{ $post->longitude }}</p>
 <p>投稿日時:{{ $post->spotted_at }}</p>
@@ -22,4 +23,5 @@
 
 <a href="{{ route('posts.edit', ['id' => $post->id]) }}">内容を編集する</a>
 <a href="{{ route('posts.index') }}">投稿一覧ページに戻る</a>
+<a href="{{ route('mypage') }}">マイページに戻る</a>
 
