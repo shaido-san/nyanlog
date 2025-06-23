@@ -5,6 +5,16 @@
     @method('PUT')
 
     <p>メモ: <input type="text" name="memo" value="{{ old('memo', $post->memo) }}"></p>
+    <p>猫ちゃんの種類:</p>
+    <select name="category" required>
+        <option value="">選んでください</option>
+        <option value="黒猫" {{ old('category', $post->category) == '黒猫' ? 'selected' : '' }}>黒猫</option>
+        <option value="白猫" {{ old('category', $post->category) == '白猫' ? 'selected' : '' }}>白猫</option>
+        <option value="三毛猫" {{ old('category', $post->category) == '三毛猫' ? 'selected' : '' }}>三毛猫</option>
+        <option value="キジトラ" {{ old('category', $post->category) == 'キジトラ' ? 'selected' : '' }}>キジトラ</option>
+        <option value="茶トラ" {{ old('category', $post->category) == '茶トラ' ? 'selected' : '' }}>茶トラ</option>
+        <option value="その他" {{ old('category', $post->category) == 'その他' ? 'selected' : '' }}>その他</option>
+    </select>
     <p>緯度: <input type="text" name="latitude" id="latitude" value="{{ old('latitude', $post->latitude) }}"></p>
     <p>経度: <input type="text" name="longitude" id="longitude" value="{{ old('longitude', $post->longitude) }}"></p>
     <p>投稿日時: <input type="datetime-local" name="spotted_at" value="{{ old('spotted_at', $post->spotted_at) }}"></p>

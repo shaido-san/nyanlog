@@ -88,7 +88,7 @@ class PostController extends Controller
         
         $validated = $request->validate([
             'memo' => 'nullable|string|max:255',
-            'category' => 'required|string',
+            'category' => ['required', Rule::in(['黒猫', '白猫', '三毛猫', 'キジトラ', '茶トラ', 'その他'])],
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
             'spotted_at' => 'nullable|date',
@@ -97,7 +97,7 @@ class PostController extends Controller
         
         $post->update([
             'memo' => $validated['memo'] ?? $post->memo,
-            'category' => $validated['category'],
+            'category' => $validated['category'] ?? $post->category,
             'latitude' => $validated['latitude'] ?? $post->latitude,
             'longitude' => $validated['longitude'] ?? $post->longitude,
             'spotted_at' => $validated['spotted_at'] ?? $post->spotted_at,
