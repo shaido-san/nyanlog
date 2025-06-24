@@ -43,9 +43,13 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('message', '投稿完了だにゃん！');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::latest()->get();
+        $query = Post::query();
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+        $posts = $query->latest()->get();
         return view('posts.index', compact('posts'));
     }
 
