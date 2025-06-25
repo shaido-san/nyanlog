@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/posts/{id}', [PostController::class, 'delete'])->name('posts.delete');
     Route::get('map', [PostController::class, 'map'])->name('posts.map');
+    Route::get('/myposts', [PostController::class, 'myposts'])->middleware(['auth'])->name('posts.myposts');
 });
 
 require __DIR__.'/auth.php';

@@ -119,4 +119,10 @@ class PostController extends Controller
        $posts = $query->get();
         return view('posts.map', compact('posts'));
     }
+
+    public function myposts()
+    {
+        $posts = Post::where('user_id', auth()->id())->latest()->get();
+        return view('posts.myposts', compact('posts'));
+    }
 }
