@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -28,7 +30,23 @@ class PostController extends Controller
             'spotted_at' => 'nullable|date',
         ]);
 
-        $path = $request->file('image')->store('images', 'public');
+        $image = $request->file('image');
+        $path = $image->store('images', 'public');
+
+        $response = Http::attach(
+            'image',
+            file_get_contents($image->getRealPath()),
+            $image->getClientOriginalName()
+        )->post('http://127.0.0.1:5000/identify');
+
+        $individualId = null;
+        $category = $validated['category'];
+
+        if ($response->successful()) {
+            $data = $response->json();
+            $individualId = $data['individual_id' ?? null];
+            $category = $data['category'] ?? $category;
+        }
 
         Post::create([
             'user_id' => auth()->id(),
@@ -38,6 +56,7 @@ class PostController extends Controller
             'latitude' => $validated['latitude'] ?? null,
             'longitude' => $validated['longitude'] ?? null,
             'spotted_at' => $validated['spotted_at'] ?? now(),
+            'individual' => $individualId,
         ]);
 
         return redirect()->route('posts.index')->with('message', '投稿完了だにゃん！');
