@@ -43,8 +43,9 @@ class PostController extends Controller
         $category = $validated['category'];
 
         if ($response->successful()) {
+            //dd($response->status(), $response->body());
             $data = $response->json();
-            $individualId = $data['individual_id' ?? null];
+            $individualId = $data['individual_id'] ?? null;
             $category = $data['category'] ?? $category;
         }
 
@@ -56,7 +57,7 @@ class PostController extends Controller
             'latitude' => $validated['latitude'] ?? null,
             'longitude' => $validated['longitude'] ?? null,
             'spotted_at' => $validated['spotted_at'] ?? now(),
-            'individual' => $individualId,
+            'individual_id' => $individualId,
         ]);
 
         return redirect()->route('posts.index')->with('message', '投稿完了だにゃん！');
