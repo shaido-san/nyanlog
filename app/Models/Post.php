@@ -14,7 +14,7 @@ class Post extends Model
         'user_id',
         'category',
         'spotted_at',
-        'indivial_id',
+        'individual_id',
     ];
 
     public function user()
