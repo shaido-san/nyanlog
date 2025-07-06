@@ -42,7 +42,7 @@
             <h3>地図で猫ちゃんの位置を決めてね！緯度と経度は位置を決めれば自動で決まるよ！</h3>
             <div id="map" style="height: 400px;"></div>
         </div>
-        <button type="submit">投稿する</button>
+        <button type="submit" name="action" value="identify">猫ちゃんを識別する</button>
     </form>
     <a href="{{ route('posts.index') }}">投稿一覧ページに戻る</a>
 </body>
