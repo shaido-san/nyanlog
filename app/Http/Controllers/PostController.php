@@ -147,4 +147,42 @@ class PostController extends Controller
         $posts = Post::where('user_id', auth()->id())->latest()->get();
         return view('posts.myposts', compact('posts'));
     }
+
+    public function idnitfyAndConfirm(Request $request)
+    {
+        $validated = $request->validated([
+            'image' => 'requierd|image',
+            'memo' => 'nullable|string',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            'spotted_at' => 'nullable|date'
+        ]);
+
+        $image = $request->file('image');
+        $path = $image->store('images/tmp', 'public');
+
+        $response = Http::attach(
+            'image',
+            file_get_contents($image->getRealPath()),
+            $image->getClientOriginalName()
+        )->post('http://127.0.0.1:5000/idntfy');
+
+        if (! $response->successful()) {
+            return back()->withErrors(['api' => '識別APIに接続できませんでした'])->withInput();
+        }
+
+        $data = $response->json();
+
+        return view('posts.confirm', [
+            'image_path' => $path,
+            'memo' => $validated['memo'],
+            'latitude' => $validated['latitude'],
+            'longitude' => $validated['longitude'],
+            'spotted_at' => $validated['spotted_at'],
+            'suggested_category' => $data['suggested_category'] ?? null,
+            'candidates' => $data['match_candidates'] ?? []
+        ]);
+    }
+
 }
+
