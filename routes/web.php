@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/posts/{id}', [PostController::class, 'delete'])->name('posts.delete');
     Route::get('map', [PostController::class, 'map'])->name('posts.map');
     Route::get('/myposts', [PostController::class, 'myposts'])->middleware(['auth'])->name('posts.myposts');
+    Route::post('/posts/confirm', [PostController::class, 'identifyAndConfirm'])->name('posts.confirm');
 });
 
 require __DIR__.'/auth.php';

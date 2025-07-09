@@ -8,7 +8,7 @@
     @if (session('message'))
     <p style="color: green">{{ session('message') }}</p>
     @endif
-    <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('posts.confirm') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div>
             <label for="image">画像:</label>

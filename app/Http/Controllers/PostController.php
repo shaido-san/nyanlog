@@ -148,10 +148,10 @@ class PostController extends Controller
         return view('posts.myposts', compact('posts'));
     }
 
-    public function idnitfyAndConfirm(Request $request)
+    public function identifyAndConfirm(Request $request)
     {
-        $validated = $request->validated([
-            'image' => 'requierd|image',
+        $validated = $request->validate([
+            'image' => 'required|image',
             'memo' => 'nullable|string',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
@@ -165,7 +165,7 @@ class PostController extends Controller
             'image',
             file_get_contents($image->getRealPath()),
             $image->getClientOriginalName()
-        )->post('http://127.0.0.1:5000/idntfy');
+        )->post('http://127.0.0.1:5000/identify');
 
         if (! $response->successful()) {
             return back()->withErrors(['api' => '識別APIに接続できませんでした'])->withInput();
