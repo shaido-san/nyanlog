@@ -21,8 +21,10 @@ class PostController extends Controller
 
     public function store(Request $request)
 {
+    if ($request->has('image_path')) {
     $validated = $request->validate([
-        'image' => 'required|image',
+        'individual_id' => 'required|string',
+        'image_path' => 'required|string',
         'memo' => 'nullable|string',
         'category' => 'required|string',
         'latitude' => 'nullable|numeric',
@@ -30,39 +32,22 @@ class PostController extends Controller
         'spotted_at' => 'nullable|date',
     ]);
 
-    $image = $request->file('image');
-    $path = $image->store('images', 'public');
-
-    $response = Http::attach(
-        'image',
-        file_get_contents($image->getRealPath()),
-        $image->getClientOriginalName()
-    )->post('http://127.0.0.1:5000/identify');
-
-    if (! $response->successful()) {
-        return back()->withErrors(['api' => '識別APIに接続できませんでした'])->withInput();
-    }
-
-    $data = $response->json();
-    $individualId = $data['individual_id'] ?? null;
-    $category = $data['category'] ?? $validated['category'];
-
-    if (! $individualId) {
-        return back()->withErrors(['individual_id' => '識別IDが取得できませんでした'])->withInput();
-    }
-
+    $finalPath = str_replace('images/tmp/', 'images', $validated['image_path']);
+    \Storage::disk('public')->move($validated['image_path'], $finalPath);
+   
     Post::create([
         'user_id' => auth()->id(),
-        'image_path' => $path,
-        'memo' => $validated['memo'] ?? null,
-        'category' => $category,
-        'latitude' => $validated['latitude'] ?? null,
-        'longitude' => $validated['longitude'] ?? null,
+        'image_path' => $finalPath,
+        'memo' => $validated['memo'],
+        'category' => $validated['category'],
+        'latitude' => $validated['latitude'],
+        'longitude' => $validated['longitude'],
         'spotted_at' => $validated['spotted_at'] ?? now(),
-        'individual_id' => $individualId,
+        'individual_id' => $validated['individual_id'],
     ]);
 
     return redirect()->route('posts.index')->with('message', '投稿完了だにゃん！');
+   }
 }
 
     public function index(Request $request)
