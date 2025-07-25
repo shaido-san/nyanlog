@@ -18,16 +18,7 @@
             <label for="memo">メモ:</label>
             <textarea name="memo" id="memo"></textarea>
         </div>
-        <p>猫ちゃんの種類</p>
-            <select name="category" required>
-                <option value="">この中から選んでください</option>
-                <option value="黒猫">黒猫</option>
-                <option value="白猫">白猫</option>
-                <option value="三毛猫">三毛猫</option>
-                <option value="キジトラ">キジトラ</option>
-                <option value="茶トラ">茶トラ</option>
-                <option value="その他">その他</option>
-            </select>
+        
         <div>
             <label for="latitude">緯度:</label>
             <input type="text" name="latitude" id="latitude" readonly style="background-color: #f0f0f0;">
