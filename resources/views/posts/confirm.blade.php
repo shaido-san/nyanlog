@@ -4,7 +4,6 @@
     @csrf
     <input type="hidden" name="image_path" value="{{ $image_path }}">
     <input type="hidden" name="memo" value="{{ $memo }}">
-    <input type="hidden" name="category" value="{{ $suggested_category }}">
     <input type="hidden" name="latitude" value="{{ $latitude }}">
     <input type="hidden" name="longitude" value="{{ $longitude }}">
     <input type="hidden" name="spotted_at" value="{{ $spotted_at }}">
@@ -23,7 +22,6 @@
             @endforeach
         </select>
     </div>
-    {{-- 個体識別の候補 --}}
     <h3>この猫ちゃんに見覚えはある？</h3>
     @foreach ($candidates as $candidate)
        <label>
@@ -31,7 +29,9 @@
            猫ちゃんID:{{ $candidate['individual_id'] }}(信頼度{{ $candidate['confidence'] }})
        </label><br>
     @endforeach
-
+    @if (empty($candidates))
+       <input type="hidden" name="individualid" value="new_{{ time() }}">
+    @endif
     <button type="submit">この猫ちゃんと同じにして投稿する。</button>
 </form>
 

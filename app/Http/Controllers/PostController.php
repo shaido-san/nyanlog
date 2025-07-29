@@ -39,7 +39,7 @@ class PostController extends Controller
         'user_id' => auth()->id(),
         'image_path' => $finalPath,
         'memo' => $validated['memo'],
-        'category' => $request->input['category'],
+        'category' => $validated['category'],
         'latitude' => $validated['latitude'],
         'longitude' => $validated['longitude'],
         'spotted_at' => $validated['spotted_at'] ?? now(),
