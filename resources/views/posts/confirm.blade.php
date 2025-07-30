@@ -27,10 +27,12 @@
        <label>
            <input type="radio" name="individual_id" value="{{ $candidate['individual_id'] }}" required>
            猫ちゃんID:{{ $candidate['individual_id'] }}(信頼度{{ $candidate['confidence'] }})
+           <br>
+           <imag src="{{ asset('storage/' . $candidate['image_path']) }}" width="200"></imag>
        </label><br>
     @endforeach
     @if (empty($candidates))
-       <input type="hidden" name="individualid" value="new_{{ time() }}">
+       <input type="hidden" name="individua_lid" value="new_{{ time() }}">
     @endif
     <button type="submit">この猫ちゃんと同じにして投稿する。</button>
 </form>
