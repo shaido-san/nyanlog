@@ -46,8 +46,29 @@ class PostController extends Controller
         'individual_id' => $validated['individual_id'],
     ]);
 
+    try {
+        $response = Http::attach(
+            'image',
+            \Storage::disk('public')->get($finalPath),
+            basename($finalPath)
+        )->post('http://127.0.0.1:5000/register',[
+            'individual_id' => $validated('individual_id')
+        ]);
+
+        if (! $response->successful()) {
+            \Log::warning('Flask /register API failed', [
+                'response' => $response->body()
+            ]);
+        }
+    } catch (\Exception $e) {
+        \Log::error('Flask /register API exception', [
+            'error' => $e->getMessage()
+        ]);
+    }
+    
     return redirect()->route('posts.index')->with('message', '投稿完了だにゃん！');
    }
+   return back()->withErrors(['image_path' => '画像が見つかりません'])->withInput();
 }
 
     public function index(Request $request)
