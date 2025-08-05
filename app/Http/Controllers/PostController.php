@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
@@ -24,6 +25,7 @@ class PostController extends Controller
     if ($request->has('image_path')) {
     $validated = $request->validate([
         'individual_id' => 'required|string',
+        'name' => 'nullable|string',
         'image_path' => 'required|string',
         'memo' => 'nullable|string',
         'category' => 'required|string',
@@ -47,13 +49,17 @@ class PostController extends Controller
     ]);
 
     try {
+        $fullPath = Storage::disk('public')->path($finalPath);
+
         $response = Http::attach(
             'image',
-            \Storage::disk('public')->get($finalPath),
+            fopen($fullPath, 'r'),
             basename($finalPath)
-        )->post('http://127.0.0.1:5000/register',[
-            'individual_id' => $validated('individual_id')
-        ]);
+            )->post('http://127.0.0.1:5000/register',[
+            'name' => $validated['name'],
+            'individual_id' =>$validated['individual_id'],
+            ]);
+        
 
         if (! $response->successful()) {
             \Log::warning('Flask /register API failed', [

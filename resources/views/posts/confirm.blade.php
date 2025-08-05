@@ -23,18 +23,31 @@
         </select>
     </div>
     <h3>この猫ちゃんに見覚えはある？</h3>
-    @foreach ($candidates as $candidate)
-       <label>
+    @if (!empty($candidates))
+       @foreach ($candidates as $candidate)
+        <label>
            <input type="radio" name="individual_id" value="{{ $candidate['individual_id'] }}" required>
            猫ちゃんID:{{ $candidate['individual_id'] }}(信頼度{{ $candidate['confidence'] }})
            <br>
-           <imag src="{{ asset('storage/' . $candidate['image_path']) }}" width="200"></imag>
-       </label><br>
-    @endforeach
-    @if (empty($candidates))
-       <input type="hidden" name="individua_lid" value="new_{{ time() }}">
+           <img src="{{ asset('storage/' . $candidate['image_path']) }}" width="200"></imag>
+        </label><br>
+      @endforeach
+    
+    <label>
+        <input type="radio" name="individual_id" value="new_{{ time() }}" required>
+        新しい猫ちゃんで登録する
+    </label><br>
+    @else
+      <p>似ている猫ちゃんは見つかりませんでした。新しい猫ちゃんとして登録する</p>
+      <input type="hidden" name="individual_id" value="new_{{ time() }}" required>
     @endif
-    <button type="submit">この猫ちゃんと同じにして投稿する。</button>
+
+    <div>
+        <label for="name">猫ちゃんの名前を決めてね(新規登録の場合)</label>
+        <input type="text" name="name" id="name">
+    </div>
+
+    <button type="submit">投稿する</button>
 </form>
 
 <a href="{{ route('posts.create') }}">投稿フォームに戻る</a>
